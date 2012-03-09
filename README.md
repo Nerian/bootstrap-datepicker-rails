@@ -4,7 +4,7 @@ It includes base CSS and HTML for typography, forms, buttons, tables, grids, nav
 
 http://twitter.github.com/bootstrap/
 
-Bootstrap Datepicker is plugin for Bootstrap designed by Stefan Petre. It provides a stylish date picker for Bootstrap.
+Bootstrap Datepicker is a plugin for Bootstrap designed by Stefan Petre. It provides a stylish date picker for Bootstrap.
 
 http://www.eyecon.ro/bootstrap-datepicker/
 
@@ -46,7 +46,7 @@ Add necessary javascript(s) files to app/assets/javascripts/application.js
 
 ## Using bootstrap-datepicker-rails
 
-Call the datepicker via javascript:
+Just call datepicker() with any selector.
 
 ```javascript
 $('.datepicker').datepicker()
