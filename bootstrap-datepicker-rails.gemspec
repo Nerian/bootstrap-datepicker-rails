@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
 
   gem.name          = "bootstrap-datepicker-rails"
   gem.require_paths = ["lib"]
-  gem.version       = Datepicker::Rails::VERSION
+  gem.version       = BootstrapDatepickerRails::Rails::VERSION
 
   gem.add_dependency "railties", ">= 3.0"
   gem.add_development_dependency "bundler", ">= 1.0"
