@@ -12,6 +12,10 @@ bootstrap-datepicker-rails project integrates Datepicker with Rails 3 assets pip
 
 http://github.com/Nerian/bootstrap-datepicker-rails
 
+It also integrates the improvements made by Andrew Rowls.
+
+https://bitbucket.org/eternicode/bootstrap-datepicker
+
 ## Rails > 3.1
 Include bootstrap-datepicker-rails in Gemfile;
 
