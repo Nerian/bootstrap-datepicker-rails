@@ -37,7 +37,7 @@ and run bundle install.
 Add necessary stylesheet file to app/assets/stylesheets/application.css
 
 ``` css
-*=bootstrap-datepicker
+ *= require bootstrap-datepicker
 ```
 
 ## Javascripts
@@ -86,7 +86,7 @@ The latest date that may be selected; all later dates will be disabled.
 
 Format a component.
 
-```html 
+```html
 <div class="input-append date" id="datepicker" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
     <input class="span2" size="16" type="text" value="12-02-2012">
     <span class="add-on"><i class="icon-th"></i></span>
