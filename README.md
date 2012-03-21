@@ -58,7 +58,7 @@ $('.datepicker').datepicker()
 
 String.  Default: 'mm/dd/yyyy'
 
-The date format, combination of d, dd, m, mm, yy, yyy.
+The date format, combination of d, dd, m, mm, M, MM, yy, yyy.
 
 #### weekStart
 
@@ -77,6 +77,12 @@ The earliest date that may be selected; all earlier dates will be disabled.
 String.  Default: End of time
 
 The latest date that may be selected; all later dates will be disabled.
+
+#### autoclose
+
+Boolean.  Default: false
+
+Whether or not to close the datepicker immediately when a date is selected.
 
 ### Markup
 
