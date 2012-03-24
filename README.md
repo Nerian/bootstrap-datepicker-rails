@@ -12,6 +12,10 @@ bootstrap-datepicker-rails project integrates Datepicker with Rails 3 assets pip
 
 http://github.com/Nerian/bootstrap-datepicker-rails
 
+It also integrates the improvements made by Andrew Rowls.
+
+https://bitbucket.org/eternicode/bootstrap-datepicker
+
 ## Rails > 3.1
 Include bootstrap-datepicker-rails in Gemfile;
 
@@ -33,7 +37,7 @@ and run bundle install.
 Add necessary stylesheet file to app/assets/stylesheets/application.css
 
 ``` css
-*=bootstrap-datepicker
+ *= require bootstrap-datepicker
 ```
 
 ## Javascripts
@@ -88,7 +92,7 @@ Whether or not to close the datepicker immediately when a date is selected.
 
 Format a component.
 
-```html 
+```html
 <div class="input-append date" id="datepicker" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
     <input class="span2" size="16" type="text" value="12-02-2012">
     <span class="add-on"><i class="icon-th"></i></span>
