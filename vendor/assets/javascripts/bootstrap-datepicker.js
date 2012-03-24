@@ -3,6 +3,7 @@
  * http://www.eyecon.ro/bootstrap-datepicker
  * =========================================================
  * Copyright 2012 Stefan Petre
+ * Improvements by Andrew Rowls
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +38,8 @@
 			this.element.on({
 				focus: $.proxy(this.show, this),
 				blur: $.proxy(this._hide, this),
-				keyup: $.proxy(this.update, this)
+				keyup: $.proxy(this.update, this),
+				keydown: $.proxy(this.keydown, this)
 			});
 		} else {
 			if (this.component){
@@ -113,7 +115,7 @@
 			}
 		},
 		
-		hide: function(){
+		hide: function(e){
 			this.picker.hide();
 			$(window).off('resize', this.place);
 			this.viewMode = 0;
@@ -121,7 +123,8 @@
 			if (!this.isInput) {
 				$(document).off('mousedown', this.hide);
 			}
-			this.setValue();
+			if (e && e.currentTarget.value)
+				this.setValue();
 			this.element.trigger({
 				type: 'hide',
 				date: this.date
@@ -398,6 +401,103 @@
 			e.stopPropagation();
 			e.preventDefault();
 		},
+
+		moveMonth: function(date, dir){
+			if (!dir) return date;
+			var new_date = new Date(date.valueOf()),
+				day = new_date.getDate(),
+				month = new_date.getMonth(),
+				mag = Math.abs(dir),
+				new_month, test;
+			dir = dir > 0 ? 1 : -1;
+			if (mag == 1){
+				test = dir == -1
+					// If going back one month, make sure month is not current month
+					// (eg, Mar 31 -> Feb 31 == Feb 28, not Mar 02)
+					? function(){ return new_date.getMonth() == month; }
+					// If going forward one month, make sure month is as expected
+					// (eg, Jan 31 -> Feb 31 == Feb 28, not Mar 02)
+					: function(){ return new_date.getMonth() != new_month; };
+				new_month = month + dir;
+				new_date.setMonth(new_month);
+				// Dec -> Jan (12) or Jan -> Dec (-1) -- limit expected date to 0-11
+				if (new_month < 0 || new_month > 11)
+					new_month = (new_month + 12) % 12;
+			} else {
+				// For magnitudes >1, move one month at a time...
+				for (var i=0; i<mag; i++)
+					// ...which might decrease the day (eg, Jan 31 to Feb 28, etc)...
+					new_date = this.moveMonth(new_date, dir);
+				// ...then reset the day, keeping it in the new month
+				new_month = new_date.getMonth();
+				new_date.setDate(day);
+				test = function(){ return new_month != new_date.getMonth(); };
+			}
+			// Common date-resetting loop -- if date is beyond end of month, make it
+			// end of month
+			while (test()){
+				new_date.setDate(--day);
+				new_date.setMonth(new_month);
+			}
+			return new_date;
+		},
+
+		moveYear: function(date, dir){
+			return this.moveMonth(date, dir*12);
+		},
+
+		keydown: function(e){
+			if (this.picker.is(':not(:visible)')){
+				if (e.keyCode == 27) // allow escape to hide and re-show picker
+					this.show();
+				return;
+			}
+			var dir, day, month;
+			switch(e.keyCode){
+				case 27: // escape
+					this.hide();
+					e.preventDefault();
+					break;
+				case 37: // left
+				case 39: // right
+					dir = e.keyCode == 37 ? -1 : 1;
+					if (e.ctrlKey){
+						this.date = this.moveYear(this.date, dir);
+						this.viewDate = this.moveYear(this.viewDate, dir);
+					} else if (e.shiftKey){
+						this.date = this.moveMonth(this.date, dir);
+						this.viewDate = this.moveMonth(this.viewDate, dir);
+					} else {
+						this.date.setDate(this.date.getDate() + dir);
+						this.viewDate.setDate(this.viewDate.getDate() + dir);
+					}
+					this.setValue();
+					this.update();
+					e.preventDefault();
+					break;
+				case 38: // up
+				case 40: // down
+					dir = e.keyCode == 38 ? -1 : 1;
+					if (e.ctrlKey){
+						this.date = this.moveYear(this.date, dir);
+						this.viewDate = this.moveYear(this.viewDate, dir);
+					} else if (e.shiftKey){
+						this.date = this.moveMonth(this.date, dir);
+						this.viewDate = this.moveMonth(this.viewDate, dir);
+					} else {
+						this.date.setDate(this.date.getDate() + dir * 7);
+						this.viewDate.setDate(this.viewDate.getDate() + dir * 7);
+					}
+					this.setValue();
+					this.update();
+					e.preventDefault();
+					break;
+				case 13: // enter
+					this.hide();
+					e.preventDefault();
+					break;
+			}
+		},
 		
 		showMode: function(dir) {
 			if (dir) {
@@ -466,9 +566,10 @@
 		},
 		parseDate: function(date, format) {
 			if (date instanceof Date) return date;
-			var parts = date.split(format.separator),
-				date = new Date(1970, 1, 1, 0, 0, 0),
+			var parts = date ? date.split(format.separator) : [],
+				date = new Date(),
 				val, filtered;
+			date = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
 			if (parts.length == format.parts.length) {
 				for (var i=0, cnt = format.parts.length; i < cnt; i++) {
 					val = parseInt(parts[i], 10)||1;
