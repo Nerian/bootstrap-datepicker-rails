@@ -6,7 +6,8 @@ task 'update' do
   system("rm -rf bootstrap-datepicker")
   system("git clone git://github.com/eternicode/bootstrap-datepicker.git")
   system("cp bootstrap-datepicker/css/datepicker.css vendor/assets/stylesheets/bootstrap-datepicker.css")
-  system("cp bootstrap-datepicker/js/bootstrap-datepicker.js vendor/assets/javascripts/bootstrap-datepicker.js")
+  system("cp bootstrap-datepicker/js/bootstrap-datepicker.js vendor/assets/javascripts/bootstrap-datepicker-code.js")
+  system("cp -R bootstrap-datepicker/js/locales/ vendor/assets/javascripts/locales/")
   system("git status")
 end
 
