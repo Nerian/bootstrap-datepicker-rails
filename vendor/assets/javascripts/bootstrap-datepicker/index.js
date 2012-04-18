@@ -1,1 +1,2 @@
-// require core
+//= require ./core
+//= require_tree ./locales/
