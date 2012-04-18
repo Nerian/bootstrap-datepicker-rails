@@ -7,6 +7,7 @@ task 'update' do
   system("git clone git://github.com/eternicode/bootstrap-datepicker.git")
   system("cp bootstrap-datepicker/css/datepicker.css vendor/assets/stylesheets/bootstrap-datepicker.css")
   system("cp bootstrap-datepicker/js/bootstrap-datepicker.js vendor/assets/javascripts/bootstrap-datepicker.js")
+  system("git status")
 end
 
 desc "Build the gem"

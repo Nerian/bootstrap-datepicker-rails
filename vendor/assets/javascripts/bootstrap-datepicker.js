@@ -475,7 +475,8 @@
 					this.show();
 				return;
 			}
-			var dir, day, month;
+			var dateChanged = false,
+				dir, day, month;
 			switch(e.keyCode){
 				case 27: // escape
 					this.hide();
@@ -497,6 +498,7 @@
 					this.setValue();
 					this.update();
 					e.preventDefault();
+					dateChanged = true;
 					break;
 				case 38: // up
 				case 40: // down
@@ -514,11 +516,27 @@
 					this.setValue();
 					this.update();
 					e.preventDefault();
+					dateChanged = true;
 					break;
 				case 13: // enter
 					this.hide();
 					e.preventDefault();
 					break;
+			}
+			if (dateChanged){
+				this.element.trigger({
+					type: 'changeDate',
+					date: this.date
+				});
+				var element;
+				if (this.isInput) {
+					element = this.element;
+				} else if (this.component){
+					element = this.element.find('input');
+				}
+				if (element) {
+					element.change();
+				}
 			}
 		},
 
@@ -584,7 +602,9 @@
 		validParts: /dd?|mm?|MM?|yy(?:yy)?/g,
 		nonpunctuation: /[^ -\/:-@\[-`{-~\t\n\r]+/g,
 		parseFormat: function(format){
-			var separators = format.split(this.validParts),
+			// IE treats \0 as a string end in inputs (truncating the value),
+			// so it's a bad format delimiter, anyway
+			var separators = format.replace(this.validParts, '\0').split('\0'),
 				parts = format.match(this.validParts);
 			if (!separators || !separators.length || !parts || parts.length == 0){
 				throw new Error("Invalid date format.");
