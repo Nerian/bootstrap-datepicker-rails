@@ -18,4 +18,12 @@ end
 desc "Publish the gem"
 task 'publish' do
   system("gem push bootstrap-datepicker-rails-#{BootstrapDatepickerRails::Rails::VERSION}.gem")
+  system("git push")
+end
+
+desc "Build and publish de gem"
+task "release" do
+  system("gem build bootstrap-datepicker-rails.gemspec")
+  system("gem push bootstrap-datepicker-rails-#{BootstrapDatepickerRails::Rails::VERSION}.gem")
+  system("git push")
 end
