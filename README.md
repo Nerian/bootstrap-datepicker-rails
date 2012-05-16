@@ -32,17 +32,15 @@ gem 'bootstrap-datepicker-rails', :require => 'bootstrap-datepicker-rails',
 
 and run bundle install.
 
-## Stylesheets
+## Configuration
 
-Add necessary stylesheet file to app/assets/stylesheets/application.css
+Add this line to app/assets/stylesheets/application.css
 
 ``` css
  *= require bootstrap-datepicker
 ```
 
-## Javascripts
-
-Add necessary javascript(s) files to app/assets/javascripts/application.js
+Add this line to app/assets/javascripts/application.js
 
 ``` javascript
 //= require bootstrap-datepicker
@@ -56,8 +54,19 @@ Just call datepicker() with any selector.
 $('.datepicker').datepicker()
 ```
 
+You can also use unostrusive javascript like this:
+
+```javascript
+$(document).on("focus", "[data-behaviour~='datepicker']", function(e){
+    $(this).datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": true});
+});
+```
+
 There are a lot of options you can pass to datepicker(). They are documented at [https://github.com/eternicode/bootstrap-datepicker](https://github.com/eternicode/bootstrap-datepicker)
 
+## Questions? Bugs?
+
+Use Github Issues.
 
 ## License
 Copyright (c) 2011 Gonzalo Rodríguez-Baltanás Díaz
