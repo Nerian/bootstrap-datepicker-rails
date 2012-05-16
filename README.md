@@ -54,12 +54,15 @@ Just call datepicker() with any selector.
 $('.datepicker').datepicker()
 ```
 
-You can also use unostrusive javascript like this:
+You can also use unobtrusive javascript like this:
 
 ```javascript
 $(document).on("focus", "[data-behaviour~='datepicker']", function(e){
     $(this).datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": true});
 });
+
+<input type="text" data-behaviour='datepicker' >
+
 ```
 
 There are a lot of options you can pass to datepicker(). They are documented at [https://github.com/eternicode/bootstrap-datepicker](https://github.com/eternicode/bootstrap-datepicker)
