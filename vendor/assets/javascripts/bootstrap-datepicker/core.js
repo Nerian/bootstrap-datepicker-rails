@@ -47,6 +47,14 @@
 			});
 		} else {
 			if (this.component){
+				// For components that are not readonly, allow keyboard nav
+				this.element.find('input').on({
+					focus: $.proxy(this.show, this),
+					blur: $.proxy(this._hide, this),
+					keyup: $.proxy(this.update, this),
+					keydown: $.proxy(this.keydown, this)
+				});
+
 				this.component.on('click', $.proxy(this.show, this));
 				var element = this.element.find('input');
 				element.on({
@@ -194,7 +202,7 @@
 
 		update: function(){
 			this.date = DPGlobal.parseDate(
-				this.isInput ? this.element.prop('value') : this.element.data('date'),
+				this.isInput ? this.element.prop('value') : this.element.data('date') || this.element.find('input').prop('value'),
 				this.format, this.language
 			);
 			if (this.date < this.startDate) {
@@ -368,6 +376,7 @@
 						break;
 					case 'span':
 						if (!target.is('.disabled')) {
+							this.viewDate.setDate(1);
 							if (target.is('.month')) {
 								var month = target.parent().find('span').index(target);
 								this.viewDate.setMonth(month);
@@ -650,8 +659,14 @@
 				setters_map = {
 					yyyy: function(d,v){ return d.setFullYear(v); },
 					yy: function(d,v){ return d.setFullYear(2000+v); },
-					m: function(d,v){ return d.setMonth(v-1); },
-					d: function(d,v){ return d.setDate(v); },
+					m: function(d,v){
+						v -= 1;
+						d.setMonth(v);
+						while (d.getMonth() != v)
+							d.setDate(d.getDate()-1);
+						return d;
+					},
+					d: function(d,v){ return d.setDate(v); }
 				},
 				val, filtered, part;
 			setters_map['M'] = setters_map['MM'] = setters_map['mm'] = setters_map['m'];
