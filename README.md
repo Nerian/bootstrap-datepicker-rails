@@ -46,6 +46,14 @@ Add this line to app/assets/javascripts/application.js
 //= require bootstrap-datepicker
 ```
 
+You can fine tune the included files to suit your needs.
+
+```javascript
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.es
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.fr
+```
+
 ## Using bootstrap-datepicker-rails
 
 Just call datepicker() with any selector.
