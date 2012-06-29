@@ -73,6 +73,10 @@ $(document).on("focus", "[data-behaviour~='datepicker']", function(e){
 
 ```
 
+Here is a live example:
+
+http://jsfiddle.net/2Gg5k/
+
 There are a lot of options you can pass to datepicker(). They are documented at [https://github.com/eternicode/bootstrap-datepicker](https://github.com/eternicode/bootstrap-datepicker)
 
 ## Questions? Bugs?
