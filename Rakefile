@@ -1,5 +1,4 @@
 #!/usr/bin/env rake
-require File.expand_path('../lib/bootstrap-datepicker-rails/version', __FILE__)
 
 desc "Update assets"
 task 'update' do
@@ -23,6 +22,7 @@ task "release" do
   system("git commit -m 'update assets'")
   
   system("gem build bootstrap-datepicker-rails.gemspec")
+  require File.expand_path('../lib/bootstrap-datepicker-rails/version', __FILE__)
   system("gem push bootstrap-datepicker-rails-#{BootstrapDatepickerRails::Rails::VERSION}.gem")  
   system("git push")
 end
