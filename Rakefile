@@ -11,17 +11,12 @@ task 'update' do
 end
 
 desc "Build and publish de gem"
-task "release" do
-  version_file      = File.read("lib/bootstrap-datepicker-rails/version.rb")
-  current_version   = version_file.match(/\d\d/)[0]
-  updated_version   = current_version.to_i + 1
-  replaced          = version_file.gsub(current_version, updated_version.to_s)  
-  File.open("lib/bootstrap-datepicker-rails/version.rb", "w") { |file| file.puts replaced }
-  
-  system("git add . ")
-  system("git commit -m 'update assets'")
-  
+task "build" do    
   system("gem build bootstrap-datepicker-rails.gemspec")
+end
+
+desc "Build and publish de gem"
+task "publish" do    
   require File.expand_path('../lib/bootstrap-datepicker-rails/version', __FILE__)
   system("gem push bootstrap-datepicker-rails-#{BootstrapDatepickerRails::Rails::VERSION}.gem")  
   system("git push")
