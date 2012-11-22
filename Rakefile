@@ -12,11 +12,7 @@ task :update do
 end
 
 def fixes
-  puts "hello"
-  core_file = File.read("vendor/assets/javascripts/bootstrap-datepicker/locales/bootstrap-datepicker.ms.js")
-  string = 'monthsShort: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ogo", "Sep", "Okt", "Nov", "Dis"]'
-  modified_file = core_file.gsub(string, string + ',')
-  File.open("vendor/assets/javascripts/bootstrap-datepicker/locales/bootstrap-datepicker.ms.js", "w") { |file| file.puts modified_file }  
+  
 end
 
 desc "Build and publish de gem"
