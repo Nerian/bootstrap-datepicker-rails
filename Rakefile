@@ -15,13 +15,13 @@ def fixes
   
 end
 
-desc "Build and publish de gem"
+desc "Build"
 task "build" do    
   system("gem build bootstrap-datepicker-rails.gemspec")
 end
 
-desc "Build and publish de gem"
-task "publish" do    
+desc "Build and publish the gem"
+task :publish => :build do    
   require File.expand_path('../lib/bootstrap-datepicker-rails/version', __FILE__)
   system("gem push bootstrap-datepicker-rails-#{BootstrapDatepickerRails::Rails::VERSION}.gem")  
   system("git push")
