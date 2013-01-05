@@ -11,10 +11,6 @@ task :update do
   system("git status")  
 end
 
-def fixes
-  
-end
-
 desc "Build"
 task "build" do    
   system("gem build bootstrap-datepicker-rails.gemspec")
