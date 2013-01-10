@@ -74,7 +74,7 @@
 		}
 		$(document).on('mousedown', function (e) {
 			// Clicked outside the datepicker, hide it
-			if ($(e.target).closest('.datepicker').length === 0) {
+			if ($(e.target).closest('.datepicker.datepicker-inline, .datepicker.datepicker-dropdown').length === 0) {
 				that.hide();
 			}
 		});
@@ -107,6 +107,18 @@
 
 		this.todayBtn = (options.todayBtn||this.element.data('date-today-btn')||false);
 		this.todayHighlight = (options.todayHighlight||this.element.data('date-today-highlight')||false);
+
+		this.calendarWeeks = false;
+		if ('calendarWeeks' in options) {
+			this.calendarWeeks = options.calendarWeeks;
+		} else if ('dateCalendarWeeks' in this.element.data()) {
+			this.calendarWeeks = this.element.data('date-calendar-weeks');
+		}
+		if (this.calendarWeeks)
+			this.picker.find('tfoot th.today')
+						.attr('colspan', function(i, val){
+							return parseInt(val) + 1;
+						});
 
 		this.weekStart = ((options.weekStart||this.element.data('date-weekstart')||dates[this.language].weekStart||0) % 7);
 		this.weekEnd = ((this.weekStart + 6) % 7);
@@ -197,6 +209,7 @@
 
 		hide: function(e){
 			if(this.isInline) return;
+			if (!this.picker.is(':visible')) return;
 			this.picker.hide();
 			$(window).off('resize', this.place);
 			this.viewMode = this.startViewMode;
@@ -339,6 +352,11 @@
 		fillDow: function(){
 			var dowCnt = this.weekStart,
 			html = '<tr>';
+			if(this.calendarWeeks){
+				var cell = '<th class="cw">&nbsp;</th>';
+				html += cell;
+				this.picker.find('.datepicker-days thead tr:first-child').prepend(cell);
+			}
 			while (dowCnt < this.weekStart + 7) {
 				html += '<th class="dow">'+dates[this.language].daysMin[(dowCnt++)%7]+'</th>';
 			}
@@ -365,7 +383,7 @@
 				endMonth = this.endDate !== Infinity ? this.endDate.getUTCMonth() : Infinity,
 				currentDate = this.date && this.date.valueOf(),
 				today = new Date();
-			this.picker.find('.datepicker-days thead th:eq(1)')
+			this.picker.find('.datepicker-days thead th.switch')
 						.text(dates[this.language].months[month]+' '+year);
 			this.picker.find('tfoot th.today')
 						.text(dates[this.language].today)
@@ -384,6 +402,13 @@
 			while(prevMonth.valueOf() < nextMonth) {
 				if (prevMonth.getUTCDay() == this.weekStart) {
 					html.push('<tr>');
+					if(this.calendarWeeks){
+						// adapted from https://github.com/timrwood/moment/blob/master/moment.js#L128
+						var a = new Date(prevMonth.getUTCFullYear(), prevMonth.getUTCMonth(), prevMonth.getUTCDate() - prevMonth.getDay() + 10 - (this.weekStart && this.weekStart%7 < 5 && 7)),
+							b = new Date(a.getFullYear(), 0, 4),
+							calWeek =  ~~((a - b) / 864e5 / 7 + 1.5);
+						html.push('<td class="cw">'+ calWeek +'</td>');
+					}
 				}
 				clsName = '';
 				if (prevMonth.getUTCFullYear() < year || (prevMonth.getUTCFullYear() == year && prevMonth.getUTCMonth() < month)) {
