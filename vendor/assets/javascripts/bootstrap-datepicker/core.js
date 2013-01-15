@@ -37,7 +37,7 @@
 		this.language = options.language||this.element.data('date-language')||"en";
 		this.language = this.language in dates ? this.language : "en";
 		this.isRTL = dates[this.language].rtl||false;
-		this.format = DPGlobal.parseFormat(options.format||this.element.data('date-format')||'mm/dd/yyyy');
+		this.format = DPGlobal.parseFormat(options.format||this.element.data('date-format')||dates[this.language].format||'mm/dd/yyyy');
 		this.isInline = false;
 		this.isInput = this.element.is('input');
 		this.component = this.element.is('.date') ? this.element.find('.add-on') : false;
@@ -331,20 +331,12 @@
 
 			if(fromArgs) this.setValue();
 
-			var oldViewDate = this.viewDate;
 			if (this.date < this.startDate) {
 				this.viewDate = new Date(this.startDate);
 			} else if (this.date > this.endDate) {
 				this.viewDate = new Date(this.endDate);
 			} else {
 				this.viewDate = new Date(this.date);
-			}
-
-			if (oldViewDate && oldViewDate.getTime() != this.viewDate.getTime()){
-				this.element.trigger({
-					type: 'changeDate',
-					date: this.viewDate
-				});
 			}
 			this.fill();
 		},
