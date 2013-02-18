@@ -2,8 +2,12 @@
 
 desc "Update assets"
 task :update do
-  system("rm -rf bootstrap-datepicker-src")
-  system("git clone git://github.com/eternicode/bootstrap-datepicker.git bootstrap-datepicker-src")
+  
+  if Dir.exist?('bootstrap-datepicker-src')    
+    system("cd bootstrap-datepicker-src && git pull && cd ..")
+  else
+    system("git clone git://github.com/eternicode/bootstrap-datepicker.git bootstrap-datepicker-src")
+  end
   system("cp bootstrap-datepicker-src/css/datepicker.css vendor/assets/stylesheets/bootstrap-datepicker.css")
   system("cp bootstrap-datepicker-src/js/bootstrap-datepicker.js vendor/assets/javascripts/bootstrap-datepicker/core.js")
   system("cp -R bootstrap-datepicker-src/js/locales/ vendor/assets/javascripts/bootstrap-datepicker/locales/")
