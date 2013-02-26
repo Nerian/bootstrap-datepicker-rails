@@ -58,19 +58,12 @@ You can fine tune the included files to suit your needs.
 
 Just call datepicker() with any selector.
 
-```javascript
-$('.datepicker').datepicker()
-```
-
-You can also use unobtrusive javascript like this:
-
-```javascript
-$(document).on("focus", "[data-behaviour~='datepicker']", function(e){
-    $(this).datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": true});
-});
+```html
+<script type="text/javascript">
+  $('[data-behaviour~=datepicker]').datepicker()
+</script>
 
 <input type="text" data-behaviour='datepicker' >
-
 ```
 
 Here is a live example:
