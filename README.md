@@ -1,8 +1,4 @@
 # Bootstrap Datepicker for Rails
-Bootstrap is a toolkit from Twitter designed to kickstart development of webapps and sites.
-It includes base CSS and HTML for typography, forms, buttons, tables, grids, navigation, and more.
-
-http://twitter.github.com/bootstrap/
 
 bootstrap-datepicker-rails project integrates a datepicker with Rails 3 assets pipeline.
 
