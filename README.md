@@ -4,15 +4,9 @@ It includes base CSS and HTML for typography, forms, buttons, tables, grids, nav
 
 http://twitter.github.com/bootstrap/
 
-Bootstrap Datepicker is a plugin for Bootstrap designed by Stefan Petre. It provides a stylish date picker for Bootstrap.
-
-http://www.eyecon.ro/bootstrap-datepicker/
-
-bootstrap-datepicker-rails project integrates Datepicker with Rails 3 assets pipeline.
+bootstrap-datepicker-rails project integrates a datepicker with Rails 3 assets pipeline.
 
 http://github.com/Nerian/bootstrap-datepicker-rails
-
-It also integrates the improvements made by Andrew Rowls.
 
 https://github.com/eternicode/bootstrap-datepicker
 
