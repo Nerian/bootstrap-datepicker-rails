@@ -49,11 +49,11 @@ You can fine tune the included files to suit your needs.
 Just call datepicker() with any selector.
 
 ```html
+<input type="text" data-behaviour='datepicker' >
+
 <script type="text/javascript">
   $('[data-behaviour~=datepicker]').datepicker()
 </script>
-
-<input type="text" data-behaviour='datepicker' >
 ```
 
 Here is a live example:
