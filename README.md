@@ -52,13 +52,13 @@ Just call datepicker() with any selector.
 <input type="text" data-behaviour='datepicker' >
 
 <script type="text/javascript">
-  $('[data-behaviour~=datepicker]').datepicker()
+  $('[data-behaviour~=datepicker]').datepicker();
 </script>
 ```
 
-Here is a live example:
+Examples:
 
-http://jsfiddle.net/2Gg5k/43/
+http://eternicode.github.io/bootstrap-datepicker/
 
 There are a lot of options you can pass to datepicker(). They are documented at [https://github.com/eternicode/bootstrap-datepicker](https://github.com/eternicode/bootstrap-datepicker)
 
