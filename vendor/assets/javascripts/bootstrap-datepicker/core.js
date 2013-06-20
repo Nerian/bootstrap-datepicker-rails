@@ -18,7 +18,7 @@
  * limitations under the License.
  * ========================================================= */
 
-!function( $ ) {
+(function( $ ) {
 
 	function UTCDate(){
 		return new Date(Date.UTC.apply(Date, arguments));
@@ -102,7 +102,7 @@
 			if (!dates[lang]) {
 				lang = lang.split('-')[0];
 				if (!dates[lang])
-					lang = $.fn.datepicker.defaults.language;
+					lang = defaults.language;
 			}
 			o.language = lang;
 
@@ -247,7 +247,7 @@
 				date: local_date,
 				format: $.proxy(function(altformat){
 					var format = altformat || this.o.format;
-					return DPGlobal.formatDate(date, format, this.language);
+					return DPGlobal.formatDate(date, format, this.o.language);
 				}, this)
 			});
 		},
@@ -633,10 +633,14 @@
 								this._setDate(date, which);
 								break;
 							case 'clear':
+								var element;
 								if (this.isInput)
-									this.element.val("");
-								else
-									this.element.find('input').val("");
+									element = this.element;
+								else if (this.component)
+									element = this.element.find('input');
+								if (element)
+									element.val("").change();
+								this._trigger('changeDate');
 								this.update();
 								if (this.o.autoclose)
 									this.hide();
@@ -946,7 +950,7 @@
 				return;
 		}
 		var d = dates[lang];
-		$.each($.fn.datepicker.locale_opts, function(i,k){
+		$.each(locale_opts, function(i,k){
 			if (k in d)
 				out[k] = d[k];
 		});
@@ -966,10 +970,10 @@
 			if (!data) {
 				var elopts = opts_from_el(this, 'date'),
 					// Preliminary otions
-					xopts = $.extend({}, $.fn.datepicker.defaults, elopts, options),
+					xopts = $.extend({}, defaults, elopts, options),
 					locopts = opts_from_locale(xopts.language),
 					// Options priority: js args, data-attrs, locales, defaults
-					opts = $.extend({}, $.fn.datepicker.defaults, locopts, elopts, options);
+					opts = $.extend({}, defaults, locopts, elopts, options);
 				if ($this.is('.input-daterange') || opts.inputs){
 					var ropts = {
 						inputs: opts.inputs || $this.find('input').toArray()
@@ -992,7 +996,7 @@
 			return this;
 	};
 
-	$.fn.datepicker.defaults = {
+	var defaults = $.fn.datepicker.defaults = {
 		autoclose: false,
 		beforeShowDay: $.noop,
 		calendarWeeks: false,
@@ -1011,7 +1015,7 @@
 		todayHighlight: false,
 		weekStart: 0
 	};
-	$.fn.datepicker.locale_opts = [
+	var locale_opts = $.fn.datepicker.locale_opts = [
 		'format',
 		'rtl',
 		'weekStart'
@@ -1101,6 +1105,8 @@
 					yyyy: function(d,v){ return d.setUTCFullYear(v); },
 					yy: function(d,v){ return d.setUTCFullYear(2000+v); },
 					m: function(d,v){
+						if (isNaN(d))
+							return d;
 						v -= 1;
 						while (v<0) v += 12;
 						v %= 12;
@@ -1149,10 +1155,14 @@
 					}
 					parsed[part] = val;
 				}
-				for (var i=0, s; i<setters_order.length; i++){
+				for (var i=0, _date, s; i<setters_order.length; i++){
 					s = setters_order[i];
-					if (s in parsed && !isNaN(parsed[s]))
-						setters_map[s](date, parsed[s]);
+					if (s in parsed && !isNaN(parsed[s])){
+						_date = new Date(date);
+						setters_map[s](_date, parsed[s]);
+						if (!isNaN(_date))
+							date = _date;
+					}
 				}
 			}
 			return date;
@@ -1245,4 +1255,4 @@
 		$('[data-provide="datepicker-inline"]').datepicker();
 	});
 
-}( window.jQuery );
+}( window.jQuery ));

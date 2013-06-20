@@ -1,5 +1,7 @@
 #!/usr/bin/env rake
 
+require 'json'
+
 desc "Update assets"
 task :update do
   if Dir.exist?('bootstrap-datepicker-src')
@@ -11,6 +13,10 @@ task :update do
   system("cp bootstrap-datepicker-src/js/bootstrap-datepicker.js vendor/assets/javascripts/bootstrap-datepicker/core.js")
   system("cp -R bootstrap-datepicker-src/js/locales/ vendor/assets/javascripts/bootstrap-datepicker/locales/")
   system("git status")
+
+  puts "\n"
+  puts "bootstrap-datepicker version:       #{JSON.parse(File.read('./bootstrap-datepicker-src/component.json'))['version']}"
+  puts "bootstrap-datepicker-rails version: #{BootstrapDatepickerRails::Rails::VERSION}"
 end
 
 desc "Build"
@@ -25,4 +31,7 @@ task :publish => :build do
   system("git tag #{BootstrapDatepickerRails::Rails::VERSION}") unless tags =~ /#{BootstrapDatepickerRails::Rails::VERSION}/
   system("gem push bootstrap-datepicker-rails-#{BootstrapDatepickerRails::Rails::VERSION}.gem")
   system("git push --tags")
+end
+
+task :release => :publish do
 end

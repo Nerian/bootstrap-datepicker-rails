@@ -17,4 +17,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "bundler", ">= 1.0"
   gem.add_development_dependency "rake"
   gem.add_development_dependency "pry"
+  gem.add_development_dependency "json"
 end
