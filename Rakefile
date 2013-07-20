@@ -30,7 +30,7 @@ task :publish => :build do
   tags = `git tag`
   system("git tag #{BootstrapDatepickerRails::Rails::VERSION}") unless tags =~ /#{BootstrapDatepickerRails::Rails::VERSION}/
   system("gem push bootstrap-datepicker-rails-#{BootstrapDatepickerRails::Rails::VERSION}.gem")
-  system("git push --tags")
+  system("git push --follow-tags")
 end
 
 task :release => :publish do
