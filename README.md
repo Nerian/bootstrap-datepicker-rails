@@ -1,5 +1,7 @@
 # Bootstrap Datepicker for Rails
 
+[![endorse](https://api.coderwall.com/nerian/endorsecount.png)](https://coderwall.com/nerian)
+
 bootstrap-datepicker-rails project integrates a datepicker with Rails 3 assets pipeline.
 
 http://github.com/Nerian/bootstrap-datepicker-rails
