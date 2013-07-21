@@ -7,6 +7,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{A date picker for Twitter Bootstrap}
   gem.homepage      = "https://github.com/Nerian/bootstrap-datepicker-rails"
   gem.summary       = gem.description
+  gem.license       = 'MIT'
 
   gem.name          = "bootstrap-datepicker-rails"
   gem.require_paths = ["lib"]
