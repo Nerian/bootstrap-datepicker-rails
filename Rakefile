@@ -27,9 +27,9 @@ end
 desc "Build and publish the gem"
 task :publish => :build do
   require File.expand_path('../lib/bootstrap-datepicker-rails/version', __FILE__)
-  tags = `git tag`
+  tags = `git tag`.split
   current_version = BootstrapDatepickerRails::Rails::VERSION
-  system("git tag -a #{current_version} -m 'Release #{current_version}'") unless tags =~ /#{current_version}/
+  system("git tag -a #{current_version} -m 'Release #{current_version}'") unless tags.include?(current_version)
   system("gem push bootstrap-datepicker-rails-#{current_version}.gem")
   system("git push --follow-tags")
 end
