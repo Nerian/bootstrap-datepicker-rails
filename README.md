@@ -1,5 +1,7 @@
 # Bootstrap Datepicker for Rails
 
+[![Gem Version](https://badge.fury.io/rb/bootstrap-datepicker-rails.png)](http://badge.fury.io/rb/bootstrap-datepicker-rails)
+
 [![endorse](https://api.coderwall.com/nerian/endorsecount.png)](https://coderwall.com/nerian)
 
 bootstrap-datepicker-rails project integrates a datepicker with Rails 3 assets pipeline.
