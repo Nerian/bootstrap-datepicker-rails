@@ -73,8 +73,8 @@
 
 		this._allow_update = false;
 
-		this.setStartDate(this.o.startDate);
-		this.setEndDate(this.o.endDate);
+		this.setStartDate(this._o.startDate);
+		this.setEndDate(this._o.endDate);
 		this.setDaysOfWeekDisabled(this.o.daysOfWeekDisabled);
 
 		this.fillDow();
@@ -143,14 +143,20 @@
 			var format = DPGlobal.parseFormat(o.format);
 			if (o.startDate !== -Infinity) {
 				if (!!o.startDate) {
-					o.startDate = DPGlobal.parseDate(o.startDate, format, o.language);
+					if (o.startDate instanceof Date)
+						o.startDate = this._local_to_utc(this._zero_time(o.startDate));
+					else
+						o.startDate = DPGlobal.parseDate(o.startDate, format, o.language);
 				} else {
 					o.startDate = -Infinity;
 				}
 			}
 			if (o.endDate !== Infinity) {
 				if (!!o.endDate) {
-					o.endDate = DPGlobal.parseDate(o.endDate, format, o.language);
+					if (o.endDate instanceof Date)
+						o.endDate = this._local_to_utc(this._zero_time(o.endDate));
+					else
+						o.endDate = DPGlobal.parseDate(o.endDate, format, o.language);
 				} else {
 					o.endDate = Infinity;
 				}
@@ -257,9 +263,9 @@
 						// Clicked outside the datepicker, hide it
 						if (!(
 							this.element.is(e.target) ||
-							this.element.find(e.target).size() ||
+							this.element.find(e.target).length ||
 							this.picker.is(e.target) ||
-							this.picker.find(e.target).size()
+							this.picker.find(e.target).length
 						)) {
 							this.hide();
 						}
@@ -283,7 +289,7 @@
 		},
 		_trigger: function(event, altdate){
 			var date = altdate || this.date,
-				local_date = new Date(date.getTime() + (date.getTimezoneOffset()*60000));
+				local_date = this._utc_to_local(date);
 
 			this.element.trigger({
 				type: event,
@@ -338,9 +344,21 @@
 			}
 		},
 
+		_utc_to_local: function(utc){
+			return new Date(utc.getTime() + (utc.getTimezoneOffset()*60000));
+		},
+		_local_to_utc: function(local){
+			return new Date(local.getTime() - (local.getTimezoneOffset()*60000));
+		},
+		_zero_time: function(local){
+			return new Date(local.getFullYear(), local.getMonth(), local.getDate());
+		},
+		_zero_utc_time: function(utc){
+			return new Date(Date.UTC(utc.getUTCFullYear(), utc.getUTCMonth(), utc.getUTCDate()));
+		},
+
 		getDate: function() {
-			var d = this.getUTCDate();
-			return new Date(d.getTime() + (d.getTimezoneOffset()*60000));
+			return this._utc_to_local(this.getUTCDate());
 		},
 
 		getUTCDate: function() {
@@ -348,7 +366,7 @@
 		},
 
 		setDate: function(d) {
-			this.setUTCDate(new Date(d.getTime() - (d.getTimezoneOffset()*60000)));
+			this.setUTCDate(this._local_to_utc(d));
 		},
 
 		setUTCDate: function(d) {
@@ -397,14 +415,15 @@
 				calendarHeight = this.picker.outerHeight(),
 				visualPadding = 10,
 				windowWidth = $window.width(),
-				windowHeight = $window.height();
+				windowHeight = $window.height(),
+				scrollTop = $window.scrollTop();
 
 			var zIndex = parseInt(this.element.parents().filter(function() {
 							return $(this).css('z-index') != 'auto';
 						}).first().css('z-index'))+10;
 			var offset = this.component ? this.component.parent().offset() : this.element.offset();
-			var height = this.component ? this.component.outerHeight(true) : this.element.outerHeight(true);
-			var width = this.component ? this.component.outerWidth(true) : this.element.outerWidth(true);
+			var height = this.component ? this.component.outerHeight(true) : this.element.outerHeight(false);
+			var width = this.component ? this.component.outerWidth(true) : this.element.outerWidth(false);
 			var left = offset.left,
 				top = offset.top;
 
@@ -434,8 +453,8 @@
 			var yorient = this.o.orientation.y,
 				top_overflow, bottom_overflow;
 			if (yorient === 'auto') {
-				top_overflow = 0 + offset.top - calendarHeight;
-				bottom_overflow = windowHeight - (offset.top + height + calendarHeight);
+				top_overflow = -scrollTop + offset.top - calendarHeight;
+				bottom_overflow = scrollTop + windowHeight - (offset.top + height + calendarHeight);
 				if (Math.max(top_overflow, bottom_overflow) === bottom_overflow)
 					yorient = 'top';
 				else
@@ -445,7 +464,7 @@
 			if (yorient === 'top')
 				top += height;
 			else
-				top -= calendarHeight + parseInt(this.picker.css('padding'));
+				top -= calendarHeight + parseInt(this.picker.css('padding-top'));
 
 			this.picker.css({
 				top: top,
@@ -462,7 +481,7 @@
 			if(arguments && arguments.length && (typeof arguments[0] === 'string' || arguments[0] instanceof Date)) {
 				date = arguments[0];
 				if (date instanceof Date)
-					date = new Date(date.getTime() - (date.getTimezoneOffset()*60000));
+					date = this._local_to_utc(date);
 				fromArgs = true;
 			} else {
 				date = this.isInput ? this.element.val() : this.element.data('date') || this.element.find('input').val();
@@ -475,10 +494,13 @@
 
 			if (this.date < this.o.startDate) {
 				this.viewDate = new Date(this.o.startDate);
+				this.date = new Date(this.o.startDate);
 			} else if (this.date > this.o.endDate) {
 				this.viewDate = new Date(this.o.endDate);
+				this.date = new Date(this.o.endDate);
 			} else {
 				this.viewDate = new Date(this.date);
+				this.date = new Date(this.date);
 			}
 			this.fill();
 		},
@@ -602,19 +624,21 @@
 				clsName = this.getClassNames(prevMonth);
 				clsName.push('day');
 
-				var before = this.o.beforeShowDay(prevMonth);
-				if (before === undefined)
-					before = {};
-				else if (typeof(before) === 'boolean')
-					before = {enabled: before};
-				else if (typeof(before) === 'string')
-					before = {classes: before};
-				if (before.enabled === false)
-					clsName.push('disabled');
-				if (before.classes)
-					clsName = clsName.concat(before.classes.split(/\s+/));
-				if (before.tooltip)
-					tooltip = before.tooltip;
+				if (this.o.beforeShowDay !== $.noop){
+					var before = this.o.beforeShowDay(this._utc_to_local(prevMonth));
+					if (before === undefined)
+						before = {};
+					else if (typeof(before) === 'boolean')
+						before = {enabled: before};
+					else if (typeof(before) === 'string')
+						before = {classes: before};
+					if (before.enabled === false)
+						clsName.push('disabled');
+					if (before.classes)
+						clsName = clsName.concat(before.classes.split(/\s+/));
+					if (before.tooltip)
+						tooltip = before.tooltip;
+				}
 
 				clsName = $.unique(clsName);
 				html.push('<td class="'+clsName.join(' ')+'"' + (tooltip ? ' title="'+tooltip+'"' : '') + '>'+prevMonth.getUTCDate() + '</td>');
@@ -1295,9 +1319,9 @@
 		},
 		headTemplate: '<thead>'+
 							'<tr>'+
-								'<th class="prev"><i class="icon-arrow-left"/></th>'+
+								'<th class="prev">&laquo;</th>'+
 								'<th colspan="5" class="datepicker-switch"></th>'+
-								'<th class="next"><i class="icon-arrow-right"/></th>'+
+								'<th class="next">&raquo;</th>'+
 							'</tr>'+
 						'</thead>',
 		contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>',
