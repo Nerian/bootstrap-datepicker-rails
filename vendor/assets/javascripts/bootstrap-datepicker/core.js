@@ -259,7 +259,7 @@
 					resize: $.proxy(this.place, this)
 				}],
 				[$(document), {
-					mousedown: $.proxy(function (e) {
+					'mousedown touchstart': $.proxy(function (e) {
 						// Clicked outside the datepicker, hide it
 						if (!(
 							this.element.is(e.target) ||
@@ -566,7 +566,7 @@
 				date.getUTCDate() == today.getDate()) {
 				cls.push('today');
 			}
-			if (currentDate && date.valueOf() == currentDate) {
+			if (date.valueOf() == currentDate) {
 				cls.push('active');
 			}
 			if (date.valueOf() < this.o.startDate || date.valueOf() > this.o.endDate ||
