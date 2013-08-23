@@ -56,7 +56,9 @@ Just call datepicker() with any selector.
 <input type="text" data-behaviour='datepicker' >
 
 <script type="text/javascript">
-  $('[data-behaviour~=datepicker]').datepicker();
+  $(document).ready(function(){
+    $('[data-behaviour~=datepicker]').datepicker();
+  })
 </script>
 ```
 
