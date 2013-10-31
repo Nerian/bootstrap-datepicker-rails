@@ -4,7 +4,7 @@
 <input type="text" class='datepicker' >
 
 <a href="#myModal" role="button" class="btn" data-toggle="modal">Datepicker in Modal</a>
- 
+
 <!-- Modal -->
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
@@ -20,8 +20,15 @@
   </div>
 </div>
 
+<div class="input-daterange" data-behaviour='datepicker' id="datepicker">
+   <input type="text" class="input-small" name="start" />
+   <span class="add-on">to</span>
+   <input type="text" class="input-small" name="end" />
+</div>
+
 <script type="text/javascript">
   $('.datepicker').datepicker()
+  $('[data-behaviour~=datepicker]').datepicker();
 </script>
 
 <div style='margin-bottom:200%'></div>
