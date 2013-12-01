@@ -44,7 +44,7 @@
 		this.element = $(element);
 		this.isInline = false;
 		this.isInput = this.element.is('input');
-		this.component = this.element.is('.date') ? this.element.find('.add-on, .btn') : false;
+		this.component = this.element.is('.date') ? this.element.find('.add-on, .input-group-addon, .btn') : false;
 		this.hasInput = this.component && this.element.find('input').length;
 		if(this.component && this.component.length === 0)
 			this.component = false;
@@ -61,8 +61,6 @@
 
 		if (this.o.rtl){
 			this.picker.addClass('datepicker-rtl');
-			this.picker.find('.prev i, .next i')
-						.toggleClass('icon-arrow-left icon-arrow-right');
 		}
 
 		this.viewMode = this.o.startView;
@@ -1044,6 +1042,11 @@
 				i = $.inArray(e.target, this.inputs),
 				l = this.inputs.length;
 			if (i == -1) return;
+
+			$.each(this.pickers, function(i, p){
+				if (!p.getUTCDate())
+					p.setUTCDate(new_date);
+			});
 
 			if (new_date < this.dates[i]){
 				// Date being moved earlier/left
