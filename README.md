@@ -44,8 +44,8 @@ You can fine tune the included files to suit your needs.
 
 ```javascript
 //= require bootstrap-datepicker/core
-//= require bootstrap-datepicker/locales/bootstrap-datepicker.es
-//= require bootstrap-datepicker/locales/bootstrap-datepicker.fr
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.fr.js
 ```
 
 ## Using bootstrap-datepicker-rails
