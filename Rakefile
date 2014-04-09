@@ -11,8 +11,9 @@ task :update do
     system("cd bootstrap-datepicker-src && git checkout release && cd ..")
   end
   system("cp bootstrap-datepicker-src/css/datepicker.css vendor/assets/stylesheets/bootstrap-datepicker.css")
+  system("cp bootstrap-datepicker-src/css/datepicker3.css vendor/assets/stylesheets/bootstrap-datepicker3.css")
   system("cp bootstrap-datepicker-src/js/bootstrap-datepicker.js vendor/assets/javascripts/bootstrap-datepicker/core.js")
-  system("cp -R bootstrap-datepicker-src/js/locales/ vendor/assets/javascripts/bootstrap-datepicker/locales/")
+  system("cp bootstrap-datepicker-src/js/locales/*.js vendor/assets/javascripts/bootstrap-datepicker/locales/")
   system("git status")
 
   puts "\n"
