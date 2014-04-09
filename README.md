@@ -32,6 +32,8 @@ Add this line to app/assets/stylesheets/application.css
 
 ``` css
  *= require bootstrap-datepicker
+ # Or if using bootstrap v3:
+ *= require bootstrap-datepicker3
 ```
 
 Add this line to app/assets/javascripts/application.js
