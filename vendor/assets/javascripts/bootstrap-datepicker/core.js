@@ -262,6 +262,10 @@
 				});
 				o.orientation.y = _plc[0] || 'auto';
 			}
+
+			if (!o.appendTo) {
+				o.appendTo = 'body';
+			}
 		},
 		_events: [],
 		_secondaryEvents: [],
@@ -409,7 +413,7 @@
 
 		show: function(){
 			if (!this.isInline)
-				this.picker.appendTo('body');
+				this.picker.appendTo(this.o.appendTo);
 			this.picker.show();
 			this.place();
 			this._attachSecondaryEvents();
