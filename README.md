@@ -55,13 +55,7 @@ You can fine tune the included files to suit your needs.
 Just call datepicker() with any selector.
 
 ```html
-<input type="text" data-behaviour='datepicker' >
-
-<script type="text/javascript">
-  $(document).ready(function(){
-    $('[data-behaviour~=datepicker]').datepicker();
-  })
-</script>
+<input type="text" data-provide='datepicker' >
 ```
 
 Examples:
