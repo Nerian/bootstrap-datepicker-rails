@@ -52,10 +52,22 @@ You can fine tune the included files to suit your needs.
 
 ## Using bootstrap-datepicker-rails
 
-Just call datepicker() with any selector.
+Just use the simple ```data-provide='datepicker'``` attribute.
 
 ```html
 <input type="text" data-provide='datepicker' >
+```
+
+Or call datepicker() with any selector.
+
+```html
+<input type="text" class='datepicker' >
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.datepicker').datepicker();
+  });
+</script>
 ```
 
 Examples:
