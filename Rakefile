@@ -1,6 +1,7 @@
 #!/usr/bin/env rake
 
 require 'json'
+require File.expand_path('../lib/bootstrap-datepicker-rails/version', __FILE__)
 
 desc "Update assets"
 task :update do
@@ -28,7 +29,6 @@ end
 
 desc "Build and publish the gem"
 task :publish => :build do
-  require File.expand_path('../lib/bootstrap-datepicker-rails/version', __FILE__)
   tags = `git tag`.split
   current_version = BootstrapDatepickerRails::Rails::VERSION
   system("git tag -a #{current_version} -m 'Release #{current_version}'") unless tags.include?(current_version)
