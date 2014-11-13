@@ -918,7 +918,7 @@
 				switch (target[0].nodeName.toLowerCase()){
 					case 'th':
 						switch (target[0].className){
-							case 'datepicker-switch':
+							case 'datepicker-switch switch-mode':
 								this.showMode(1);
 								break;
 							case 'prev':
@@ -1609,7 +1609,7 @@
 		headTemplate: '<thead>'+
 							'<tr>'+
 								'<th class="prev">&laquo;</th>'+
-								'<th colspan="5" class="datepicker-switch"></th>'+
+								'<th colspan="5" class="datepicker-switch switch-mode"></th>'+
 								'<th class="next">&raquo;</th>'+
 							'</tr>'+
 						'</thead>',
