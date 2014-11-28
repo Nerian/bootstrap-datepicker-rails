@@ -880,31 +880,31 @@
 			switch (this.viewMode){
 				case 0:
 					if (this.o.startDate !== -Infinity && year <= this.o.startDate.getUTCFullYear() && month <= this.o.startDate.getUTCMonth()){
-						this.picker.find('.prev').css({opacity: '0'});
+						this.picker.find('.prev').css({opacity: '0'}).addClass('opc0');
 					}
 					else {
-						this.picker.find('.prev').css({opacity: '100'});
+						this.picker.find('.prev').css({opacity: '100'}).removeClass('opc0');
 					}
 					if (this.o.endDate !== Infinity && year >= this.o.endDate.getUTCFullYear() && month >= this.o.endDate.getUTCMonth()){
-						this.picker.find('.next').css({opacity: '0'});
+						this.picker.find('.next').css({opacity: '0'}).addClass('opc0');
 					}
 					else {
-						this.picker.find('.next').css({opacity: '100'});
+						this.picker.find('.next').css({opacity: '100'}).removeClass('opc0');
 					}
 					break;
 				case 1:
 				case 2:
 					if (this.o.startDate !== -Infinity && year <= this.o.startDate.getUTCFullYear()){
-						this.picker.find('.prev').css({opacity: '0'});
+						this.picker.find('.prev').css({opacity: '0'}).addClass('opc0');
 					}
 					else {
-						this.picker.find('.prev').css({opacity: '100'});
+						this.picker.find('.prev').css({opacity: '100'}).removeClass('opc0');
 					}
 					if (this.o.endDate !== Infinity && year >= this.o.endDate.getUTCFullYear()){
-						this.picker.find('.next').css({opacity: '0'});
+						this.picker.find('.next').css({opacity: '0'}).addClass('opc0');
 					}
 					else {
-						this.picker.find('.next').css({opacity: '100'});
+						this.picker.find('.next').css({opacity: '100'}).removeClass('opc0');
 					}
 					break;
 			}
