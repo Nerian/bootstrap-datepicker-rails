@@ -76,6 +76,17 @@ http://eternicode.github.io/bootstrap-datepicker/
 
 There are a lot of options you can pass to datepicker(). They are documented at [https://github.com/eternicode/bootstrap-datepicker](https://github.com/eternicode/bootstrap-datepicker)
 
+## Updating the assets
+
+Please use the rake task to update the assets.
+
+Examples :
+
+```bash
+rake update             # Update the assets with the latest tag source code on master
+rake update v1.4.0      # Update the assets with the specified tag source code
+```
+
 ## Questions? Bugs?
 
 Use Github Issues.
