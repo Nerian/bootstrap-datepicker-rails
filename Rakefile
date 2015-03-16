@@ -5,11 +5,13 @@ require File.expand_path('../lib/bootstrap-datepicker-rails/version', __FILE__)
 
 desc "Update assets"
 task :update do
+  branch = ARGV.count == 1 ? "tags/#{ARGV.first}" : "master"
+
   if Dir.exist?('bootstrap-datepicker-src')
-    system("cd bootstrap-datepicker-src && git checkout master && git pull && git checkout `git describe --abbrev=0` && cd ..")
+    system("cd bootstrap-datepicker-src && git checkout #{branch} && git pull && git checkout `git describe --abbrev=0` && cd ..")
   else
     system("git clone git://github.com/eternicode/bootstrap-datepicker.git bootstrap-datepicker-src")
-    system("cd bootstrap-datepicker-src && git checkout master && git checkout `git describe --abbrev=0` && cd ..")
+    system("cd bootstrap-datepicker-src && git checkout #{branch} && git checkout `git describe --abbrev=0` && cd ..")
   end
   system("cp bootstrap-datepicker-src/dist/css/bootstrap-datepicker.css vendor/assets/stylesheets/bootstrap-datepicker.css")
   system("cp bootstrap-datepicker-src/dist/css/bootstrap-datepicker3.css vendor/assets/stylesheets/bootstrap-datepicker3.css")
