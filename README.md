@@ -83,8 +83,8 @@ Please use the rake task to update the assets.
 Examples :
 
 ```bash
-rake update             # Update the assets with the master branch source code
-rake update v1.4.0      # Update the assets with the tagged version source code
+rake update             # Update the assets with the latest tag source code on master
+rake update v1.4.0      # Update the assets with the specified tag source code
 ```
 
 ## Questions? Bugs?
