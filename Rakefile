@@ -13,7 +13,7 @@ task :update do
   end
   system("cp bootstrap-datepicker-src/dist/css/bootstrap-datepicker.css vendor/assets/stylesheets/bootstrap-datepicker.css")
   system("cp bootstrap-datepicker-src/dist/css/bootstrap-datepicker3.css vendor/assets/stylesheets/bootstrap-datepicker3.css")
-  system("cp bootstrap-datepicker-src/js/bootstrap-datepicker.js vendor/assets/javascripts/bootstrap-datepicker/core.js")
+  system("cp bootstrap-datepicker-src/dist/js/bootstrap-datepicker.js vendor/assets/javascripts/bootstrap-datepicker/core.js")
   system("cp bootstrap-datepicker-src/js/locales/*.js vendor/assets/javascripts/bootstrap-datepicker/locales/")
   system("git status")
 
