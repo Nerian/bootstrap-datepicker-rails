@@ -6,13 +6,13 @@ require File.expand_path('../lib/bootstrap-datepicker-rails/version', __FILE__)
 desc "Update assets"
 task :update do
   if Dir.exist?('bootstrap-datepicker-src')
-    system("cd bootstrap-datepicker-src && git checkout release && git pull && cd ..")
+    system("cd bootstrap-datepicker-src && git checkout master && git pull && git checkout `git describe --abbrev=0` && cd ..")
   else
     system("git clone git://github.com/eternicode/bootstrap-datepicker.git bootstrap-datepicker-src")
-    system("cd bootstrap-datepicker-src && git checkout release && cd ..")
+    system("cd bootstrap-datepicker-src && git checkout master && git checkout `git describe --abbrev=0` && cd ..")
   end
-  system("cp bootstrap-datepicker-src/css/datepicker.css vendor/assets/stylesheets/bootstrap-datepicker.css")
-  system("cp bootstrap-datepicker-src/css/datepicker3.css vendor/assets/stylesheets/bootstrap-datepicker3.css")
+  system("cp bootstrap-datepicker-src/dist/css/bootstrap-datepicker.css vendor/assets/stylesheets/bootstrap-datepicker.css")
+  system("cp bootstrap-datepicker-src/dist/css/bootstrap-datepicker3.css vendor/assets/stylesheets/bootstrap-datepicker3.css")
   system("cp bootstrap-datepicker-src/js/bootstrap-datepicker.js vendor/assets/javascripts/bootstrap-datepicker/core.js")
   system("cp bootstrap-datepicker-src/js/locales/*.js vendor/assets/javascripts/bootstrap-datepicker/locales/")
   system("git status")
