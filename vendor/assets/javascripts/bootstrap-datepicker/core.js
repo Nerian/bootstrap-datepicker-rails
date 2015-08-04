@@ -420,7 +420,7 @@
 			this.place();
 			this.picker.show();
 			this._attachSecondaryEvents();
-			this._trigger('show');
+			this._trigger('show.bs.datepicker');
 			if ((window.navigator.msMaxTouchPoints || 'ontouchstart' in document) && this.o.disableTouchKeyboard) {
 				$(this.element).blur();
 			}
@@ -446,7 +446,7 @@
 				)
 			)
 				this.setValue();
-			this._trigger('hide');
+			this._trigger('hide.bs.datepicker');
 			return this;
 		},
 
