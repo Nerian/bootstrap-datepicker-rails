@@ -1,5 +1,5 @@
 /*!
- * Datepicker for Bootstrap v1.5.0 (https://github.com/eternicode/bootstrap-datepicker)
+ * Datepicker for Bootstrap v1.6.0-alpha (https://github.com/eternicode/bootstrap-datepicker)
  *
  * Copyright 2012 Stefan Petre
  * Improvements by Andrew Rowls
@@ -348,7 +348,8 @@
   -moz-border-radius: 4px;
   border-radius: 4px;
 }
-.datepicker table tr td span:hover {
+.datepicker table tr td span:hover,
+.datepicker table tr td span.focused {
   background: #eeeeee;
 }
 .datepicker table tr td span.disabled,
@@ -470,3 +471,4 @@
   margin-left: -5px;
   margin-right: -5px;
 }
+/*# sourceMappingURL=bootstrap-datepicker.css.map */
