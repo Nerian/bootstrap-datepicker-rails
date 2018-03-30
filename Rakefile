@@ -9,13 +9,13 @@ task :update do
     checkout_branch = "tags/#{ARGV.last}"
     task ARGV.last.to_sym {}
   else
-    checkout_branch = "`git describe --abbrev=0`"
+    checkout_branch = "`git describe --abbrev=0 --tags`"
   end
 
   if Dir.exist?('bootstrap-datepicker-src')
     system("cd bootstrap-datepicker-src && git checkout master && git pull && git checkout #{checkout_branch}")
   else
-    system("git clone git://github.com/eternicode/bootstrap-datepicker.git bootstrap-datepicker-src")
+    system("git clone git://github.com/uxsolutions/bootstrap-datepicker.git bootstrap-datepicker-src")
     system("cd bootstrap-datepicker-src && git checkout #{checkout_branch}")
   end
 
