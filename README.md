@@ -42,7 +42,7 @@ Add this line to app/assets/javascripts/application.js
 //= require bootstrap-datepicker
 ```
 
-You can fine tune the included files to suit your needs.
+The default includes support for all languages. You can fine tune the included locales to suit your needs:
 
 ```javascript
 //= require bootstrap-datepicker/core
