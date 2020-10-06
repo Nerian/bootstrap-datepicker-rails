@@ -1039,7 +1039,7 @@
 
 				//Check if uniqueSort exists (supported by jquery >=1.12 and >=2.2)
 				//Fallback to unique function for older jquery versions
-				if ($.isFunction($.uniqueSort)) {
+				if (typeof $.uniqueSort === 'function') {
 					clsName = $.uniqueSort(clsName);
 				} else {
 					clsName = $.unique(clsName);
