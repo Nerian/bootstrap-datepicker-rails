@@ -15,13 +15,14 @@ task :update do
   if Dir.exist?('bootstrap-datepicker-src')
     system("cd bootstrap-datepicker-src && git checkout master && git pull && git checkout #{checkout_branch}")
   else
-    system("git clone git://github.com/uxsolutions/bootstrap-datepicker.git bootstrap-datepicker-src")
+    system("git clone git@github.com:uxsolutions/bootstrap-datepicker.git bootstrap-datepicker-src")
     system("cd bootstrap-datepicker-src && git checkout #{checkout_branch}")
   end
 
   system("cp bootstrap-datepicker-src/dist/css/bootstrap-datepicker.css vendor/assets/stylesheets/bootstrap-datepicker.css")
   system("cp bootstrap-datepicker-src/dist/css/bootstrap-datepicker3.css vendor/assets/stylesheets/bootstrap-datepicker3.css")
   system("cp bootstrap-datepicker-src/dist/js/bootstrap-datepicker.js vendor/assets/javascripts/bootstrap-datepicker/core.js")
+  system("rm -rf vendor/assets/javascripts/bootstrap-datepicker/locales/*")
   system("cp bootstrap-datepicker-src/js/locales/*.js vendor/assets/javascripts/bootstrap-datepicker/locales/")
   system("git status")
 
